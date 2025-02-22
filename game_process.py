@@ -1,7 +1,8 @@
 def to_dashes_array(length: int):
     return ['_' for _ in range(length)]
 
-
+# сделали класс-хранитель состояний нашей игры на каждом шаге
+# это всё можно было бы хранить и в отдельных переменных, но так удобнее
 class GameProcess:
     def __init__(self, lives: int, selected_word: str):
         self.word = to_dashes_array(len(selected_word))

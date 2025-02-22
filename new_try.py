@@ -1,7 +1,7 @@
 import random
 from game_process import GameProcess
 WORDS_LIST = ['do', 'car', 'life', 'block', 'garden', 'bedroom']
-LIVES_NUMBER = 10
+LIVES_NUMBER = 10 # вывели константу
 
 # Выбор слова из списка рандомно
 def word_choice(word_list):
@@ -30,12 +30,19 @@ def make_dashes():
     format_dashes = ' '.join(dashes)
     return format_dashes
 
+# вывели цикл в отдельную функцию, так обычно в играх делают
 def main_loop(selected_word: str, game_process: GameProcess):
     while not game_process.terminated:
+        #отдельно пользовательский ввод
         check_letter = input(str())
+        #отдельно внутренняя логика. Теперь её можно свободно отлаживать и тестировать
+        # без привязки к ручному вводу и к логике вывода
         game_step(game_process, selected_word, check_letter)
+        # отдельно вывод данных
         render_step(game_process)
 
+# разделили МОДЕЛЬ и ПРЕДСТАВЛЕНИЕ. Тут отдельно считается внутренняя логика
+# и изменяется состояние игры
 def game_step(process: GameProcess, selected_word, check_letter):
     process_letter_entries(process, selected_word, check_letter)
 
@@ -71,6 +78,8 @@ def process_letter_entries(process: GameProcess, selected_word: str, check_lette
             process.found_letter = letter
             process.find_letter_result = True
 
+# разделили МОДЕЛЬ и ПРЕДСТАВЛЕНИЕ. Тут отдельно выводится (или рендерится, как в играх)
+# вся визуалка.
 def render_step(process: GameProcess):
     if process.find_letter_result:
         format_word = ' '.join(process.word)
@@ -91,6 +100,7 @@ def render_position(positions):
     return positions[0] if len(positions) == 1 else ', '.join([str(x) for x in positions])
 
 if __name__ == "__main__":
+    # подготовка данных
     selected_word = word_choice(WORDS_LIST)
     letters = make_letters(selected_word)
 
@@ -100,4 +110,6 @@ if __name__ == "__main__":
     )
 
     print('Шаблон для угадывания:', make_dashes())
+
+    #запуск главного цикла
     main_loop(selected_word, game_process)

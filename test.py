@@ -11,9 +11,12 @@ def test_base():
         selected_word=word_base
     )
 
+    # как видно, с разделением логики и представления удобно имитировать игру,
+    # просто гоняя цикл и не привязываться к вводу и к выводу
     for letter in user_input:
         game_step(game_process, word_base, letter)
 
+    # в конце просто проверяем состояние игры
     assert game_process.terminated, "Should be true" # bool, string
     assert game_process.win, "Should be true"
 
