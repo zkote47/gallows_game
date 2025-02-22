@@ -35,16 +35,15 @@ def make_dashes():
 # Например, условия выигрыша/проигрыша и цикл j отдельно, но я не очень представляю как.
 def number_of_letter(selected_word):
     # Массив из прочерков, который обновляется по ходу угадывания букв
-    word = []
+
     length = len(selected_word)
-    for z in range(length):
-        word.append('_')
+    word = [' _ ' for _ in range(length)]
     health = 10
     counter_for_win = 0
+    counter_mistakes = 0
 
     while True:
         check_letter = input(str())
-        counter_mistakes = 0
         for j in range(length):
             letter = (selected_word[j])
             if letter == check_letter:
@@ -70,9 +69,38 @@ def number_of_letter(selected_word):
         print('Выигрыш!')
         break
 
+def game_step():
+    pass
 
-selected_word = word_choice()
-letters = make_letters(selected_word)
+class GameProcess:
+    def __init__(self, word, counter_for_win: int, errors: int, letters_array, win: bool,
+                 lives: int):
+        self.word_to_delete = None
+        self.word = word
+        self.counter_for_win = counter_for_win
+        self.errors = errors
+        self.letters_array = letters_array
+        self.win = win
+        self.lives = lives
 
-print('Шаблон для угадывания:', make_dashes())
-number_of_letter(selected_word)
+
+# word = preprocess_word()
+# while True:
+#     check_letter = input(str())
+#     game_step(letter, word) # один игровой шаг
+#
+# TEST_SYMBOLS_SEQUENCE = "228game"
+#
+# word = preprocess_word()
+# for letter in TEST_SYMBOLS_SEQUENCE:
+#     game_step(letter, word)
+#
+# # и дальше после цикла проверяем как сымитированный человеком ввод символов отработал и что получилось
+# # с нашей переменной word
+
+if __name__ == "__main__":
+    selected_word = word_choice()
+    letters = make_letters(selected_word)
+
+    print('Шаблон для угадывания:', make_dashes())
+    number_of_letter(selected_word)
